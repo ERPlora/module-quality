@@ -29,3 +29,16 @@ PERMISSIONS = [
 'quality.delete_inspection',
 'quality.manage_settings',
 ]
+
+ROLE_PERMISSIONS = {
+    "admin": ["*"],
+    "manager": [
+        "add_inspection",
+        "change_inspection",
+        "view_inspection",
+    ],
+    "employee": [
+        "add_inspection",
+        "view_inspection",
+    ],
+}
