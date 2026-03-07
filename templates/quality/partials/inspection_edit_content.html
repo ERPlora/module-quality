@@ -1,0 +1,77 @@
+{% load djicons i18n %}
+<div data-back-url="{% url 'quality:inspections_list' %}" hidden></div>
+
+<div class="p-4">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">{% trans "Edit Inspection" %}</h1>
+        <div class="flex gap-2">
+            <a class="btn btn-ghost btn-sm"
+               hx-get="{% url 'quality:inspections_list' %}"
+               hx-target="#main-content-area"
+               hx-push-url="true">
+                {% trans "Cancel" %}
+            </a>
+            <button type="submit" form="edit-inspection-form" class="btn btn-sm color-primary">
+                {% icon "checkmark-outline" %}
+                {% trans "Save" %}
+            </button>
+        </div>
+    </div>
+
+        {% if error %}
+        <div class="callout callout-error">
+            <div class="callout-content"><span class="callout-text">{{ error }}</span></div>
+        </div>
+        {% endif %}
+    <!-- Form -->
+    <form id="edit-inspection-form"
+          hx-post="{% url 'quality:inspection_edit' obj.id %}" class="max-w-2xl">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body flex flex-col gap-4">
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Reference" %}</label>
+                <input type="text" name="reference" class="input input-sm w-full" value="{{ obj.reference }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Title" %}</label>
+                <input type="text" name="title" class="input input-sm w-full" value="{{ obj.title }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Inspection Type" %}</label>
+                <input type="text" name="inspection_type" class="input input-sm w-full" value="{{ obj.inspection_type }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Status" %}</label>
+                <select name="status" class="select select-sm w-full">
+                <option value="">---</option>
+                </select>
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Inspector Id" %}</label>
+                <input type="text" name="inspector_id" class="input input-sm w-full" value="{{ obj.inspector_id }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Inspection Date" %}</label>
+                <input type="date" name="inspection_date" class="input input-sm w-full" value="{{ obj.inspection_date }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Result" %}</label>
+                <input type="text" name="result" class="input input-sm w-full" value="{{ obj.result }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Notes" %}</label>
+                <textarea name="notes" class="textarea textarea-sm w-full" rows="3">{{ obj.notes }}</textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
